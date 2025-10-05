@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+
+   <link rel="icon" href="./icon.png" />
+  
+  <title>Documentation de l’API REST - Profils</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; max-width: 900px; margin: auto; }
+    h1, h2 { color: #2c3e50; }
+    code, pre { background: #f4f4f4; padding: 1rem; border-radius: 4px; }
+    section { margin-bottom: 3rem; }
+  </style>
+</head>
+<body>
+
+  <h1> Documentation de l’API REST - Profils</h1>
+  <p>Toutes les routes nécessitent un token d’authentification dans l'en-tête, sauf la création (route -1-).</p>
+  <p>Exemple d'en-tête : <code>"token: VOTRE_TOKEN_ICI"</code></p>
+
+  <!-- 1. Création utilisateur -->
+  <section>
+    <h2>1. Créer un nouvel utilisateur</h2>
+    <p><strong>Méthode :</strong> POST</p>
+    <p><strong>Route :</strong> <code>/profils</code></p>
+    <p><strong>Description :</strong> Enregistre un nouvel utilisateur</p>
+    <pre>curl -X POST http://localhost:5000/profils \
+  -H "Content-Type: application/json" \
+  -d '{
+    "pseudo": "qw",
+    "courriel": "wqw@example.ca",
+    "motdepasse": "Motdepasse",
+    "isAdmin": true
+  }'
+</pre>
+    <p><strong>Retour JSON :</strong></p>
+    <pre>{
+    "message": "Utilisateur créé avec succès",
+    "id": "6895c6ff8ed1dcb0804e7948"
+}</pre>
+  </section>
+
+  <!-- 2. Voir tous les utilisateurs -->
+  <section>
+    <h2>2. Voir tous les utilisateurs (admin seulement)</h2>
+    <p><strong>Méthode :</strong> GET</p>
+    <p><strong>Route :</strong> <code>/profils</code></p>
+    <p><strong>Description :</strong> Récupère la liste de tous les utilisateurs (admin uniquement)</p>
+    <pre>curl -X GET http://localhost:5000/profils \
+-H "token: VOTRE_TOKEN_ADMIN"</pre>
+    <pre>[
+  {
+    "_id": "64c1234a...",
+    "pseudo": "wqw",
+    "courriel": "wqw@example.com",
+    "isAdmin": false
+  },
+  ...
+]</pre>
+  </section>
+
+  <!-- 3. Voir un utilisateur par ID -->
+  <section>
+    <h2>3. Voir un utilisateur par ID</h2>
+    <p><strong>Méthode :</strong> GET</p>
+    <p><strong>Route :</strong> <code>/profils/{id}</code></p>
+    <p><strong>Description :</strong> Récupère les informations d’un utilisateur spécifique</p>
+    <pre>curl -X GET http://localhost:5000/profils/64c1234a... \
+-H "token: VOTRE_TOKEN"</pre>
+    <pre>{
+  "_id": "64c1234a...",
+  "pseudo": "wqw",
+  "courriel": "wqw@example.com",
+  "isAdmin": false
+}</pre>
+  </section>
+
+  <!-- 4. Modifier un utilisateur -->
+  <section>
+    <h2>4. Modifier un utilisateur</h2>
+    <p><strong>Méthode :</strong> PUT</p>
+    <p><strong>Route :</strong> <code>/profils/{id}</code></p>
+    <p><strong>Description :</strong> Met à jour le pseudo, le courriel et/ou le mot de passe d’un utilisateur (lui-même ou admin)</p>
+    <pre>curl -X PUT http://localhost:5000/profils/64c1234a... \
+-H "Content-Type: application/json" \
+-H "token: VOTRE_TOKEN" \
+-d '{
+  "pseudo": "nouveauNom",
+  "courriel": "nouveau@email.com",
+  "motdepasse": "newPassword123"
+}'</pre>
+    <pre>{
+  "message": "Utilisateur mis à jour avec succès.",
+  "pseudo": "nouveauNom",
+  "courriel": "nouveau@email.com",
+  "_id": "64c1234a..."
+}</pre>
+  </section>
+
+  <!-- 5. Supprimer un utilisateur -->
+  <section>
+    <h2>5. Supprimer un utilisateur (admin uniquement)</h2>
+    <p><strong>Méthode :</strong> DELETE</p>
+    <p><strong>Route :</strong> <code>/profils/{id}</code></p>
+    <p><strong>Description :</strong> Supprime un utilisateur spécifique (réservé aux administrateurs)</p>
+    <pre>curl -X DELETE http://localhost:5000/profils/64c1234a... \
+-H "token: VOTRE_TOKEN_ADMIN"</pre>
+    <pre>{
+  "message": "Utilisateur supprimé avec succès"
+}</pre>
+  </section>
+
+
+<!-- 6. Obtenir un mot de passe de longeur aleatoire -->
+<section>
+  <h2>6. Obtenir un mot de passe de longueur aléatoire</h2>
+  <p><strong>Méthode :</strong> GET</p>
+  <p><strong>Route :</strong> <code>/motdepasse/{longueur}</code></p>
+  <p><strong>Description :</strong> Génère un mot de passe aléatoire de la longueur spécifiée (lettres minuscules, majuscules et chiffres)</p>
+  <pre>curl -X GET http://localhost:5000/motdepasse/12</pre>
+  <pre>{
+    "motdepasse": "2vZ789gteZMo"
+}</pre>
+</section>
+
+ <!-- 7. Obtenir ID d'un utilisateur par son pseudo -->
+  <section>
+    <h2>7. Obtenir ID d'un utilisateur par son pseudo</h2>
+    <p><strong>Méthode :</strong> GET</p>
+    <p><strong>Route :</strong> <code>/profils/pseudo/{pseudo}</code></p>
+    <p><strong>Description :</strong> Récupère l'ID d’un utilisateur spécifique, pas besoin de token pour cette api</p>
+    <pre>curl -X GET http://localhost:5000/profils/pseudo/Adminss </pre>
+    <pre>{
+    "id": "68955978830c6a1f83f012c6"
+}</pre>
+  </section>
+
+  <!-- 8. Se connecter et obtenir un token JWT -->
+<section>
+  <h2>8. Se connecter et obtenir un token JWT</h2>
+  <p><strong>Méthode :</strong> POST</p>
+  <p><strong>Route :</strong> <code>/login</code></p>
+  <p><strong>Description :</strong> Authentifie un utilisateur avec son courriel et mot de passe, puis renvoie un token JWT à utiliser dans les requêtes protégées</p>
+  <pre>curl -X POST http://localhost:5000/login \
+-H "Content-Type: application/json" \
+-d '{
+  "courriel": "exemple@domaine.ca",
+  "motdepasse": "Motdepasse123"
+}'</pre>
+  <pre>{
+    "message": "Connexion réussie !",
+    "token": "eyJhhG....",
+    "pseudo": "Adminss",
+    "isAdmin": true,
+    "id": "689559....",
+    "courriel": "exemple@domaine.ca"
+}</pre>
+</section>
+
+
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+body {
+  margin: 50px;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background-color: #ffb347;
+  background-image: url('./bgphoto.jpg'); /* 小爪印背景 */
+  background-size: cover;
+  background-attachment: fixed;
+  color: #4b3832;
+}
+
+.card{
+  background-color: #ffffff;
+  padding: 50px;
+}
+
+h1{
+  color: #4b3832;
+  text-shadow: 2px 2px #ffcc99;
+  margin-top: 50px;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  color: #ffb347;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.api-link {
+  padding: 0.5rem 1rem;
+  background-color: #ffb347; /* 鼠标悬停背景色 */
+  color: #ffffff; /* 鼠标悬停文字色 */
+  border-radius: 5px;
+  border-color: #ff9f1c;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.api-link:hover {
+  background-color: #ffffff; /* 背景色 */
+  color: #ffb347; /* 文字颜色 */
+}
+
+.card {
+  background: #fff3e0;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  max-width: 500px;
+  margin: auto;
+}
+
+
+
+button {
+  background-color: #ffb347;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ff9f1c;
+}
+
+.link-btn {
+  background: none;
+  color: #ff6f61;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  text-decoration: underline;
+}
